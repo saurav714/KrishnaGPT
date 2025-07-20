@@ -8,13 +8,17 @@ from langchain.llms import HuggingFaceHub
 import pyttsx3
 
 # Step 1: Load Mahabharata text
-def load_maha_texts(folder="maha_texts"):
+def load_maha_texts(folder='maha_texts'):
     texts = []
+    if not os.path.exists(folder):
+        st.error("Mahabharata text folder not found!")
+        return ""
     for file in sorted(os.listdir(folder)):
-        if file.endswith(".txt"):
-            with open(os.path.join(folder, file), "r", encoding="utf-8") as f:
+        if file.endswith('.txt'):
+            with open(os.path.join(folder, file), 'r', encoding='utf-8') as f:
                 texts.append(f.read())
     return "\n".join(texts)
+
 
 # Step 2: Split and Embed
 def create_vector_db(text):
